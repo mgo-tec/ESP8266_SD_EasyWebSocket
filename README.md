@@ -97,21 +97,21 @@ Reference Blog --> https://www.mgo-tec.com
 The esp8266 core for Arduino(Tested in ver2.3.0) --> https://github.com/esp8266/Arduino  
 Released under the GNU LESSER GENERAL PUBLIC LICENSE Version 2.1  
   
-ESP8266WiFi.h - Included WiFi library for esp8266
-WiFiServer.cpp - The library modification
-Copyright (c) 2014 Ivan Grokhotkov.
-This file is part of the esp8266 core for Arduino environment.
-Released under the GNU LESSER GENERAL PUBLIC LICENSE Version 2.1
-
-WiFiClientSecure.cpp - Variant of WiFiClient with TLS support
-Copyright (c) 2015 Ivan Grokhotkov.
-This file is part of the esp8266 core for Arduino environment.
-Released under the GNU LESSER GENERAL PUBLIC LICENSE Version 2.1
-
-Hash.h - Included library
-Copyright (c) 2015 Markus Sattler.
-This file is part of the esp8266 core for Arduino environment.
-Released under the GNU LESSER GENERAL PUBLIC LICENSE Version 2.1
+ESP8266WiFi.h - Included WiFi library for esp8266  
+WiFiServer.cpp - The library modification  
+Copyright (c) 2014 Ivan Grokhotkov.  
+This file is part of the esp8266 core for Arduino environment.  
+Released under the GNU LESSER GENERAL PUBLIC LICENSE Version 2.1  
+  
+WiFiClientSecure.cpp - Variant of WiFiClient with TLS support  
+Copyright (c) 2015 Ivan Grokhotkov.  
+This file is part of the esp8266 core for Arduino environment.  
+Released under the GNU LESSER GENERAL PUBLIC LICENSE Version 2.1  
+  
+Hash.h - Included library  
+Copyright (c) 2015 Markus Sattler.  
+This file is part of the esp8266 core for Arduino environment.  
+Released under the GNU LESSER GENERAL PUBLIC LICENSE Version 2.1  
   
 # My Blog: 
 Other usage is Japanese, please visit my blog.  
