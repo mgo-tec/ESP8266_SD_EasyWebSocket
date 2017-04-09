@@ -39,7 +39,7 @@ Fixed ESP8266DataReceive_SD_write class.
 *Upgraded EasyWebSocket beta 1.39 library.  
 Bug fix etc...  
   
-#【更新履歴】(Japanese)
+# 【更新履歴】(Japanese)
 (1.49)  
 Web記事を https ( SSL )でGETする関数を追加。  
 それに伴い、WiFiClientSecure.h をインクルード。  
