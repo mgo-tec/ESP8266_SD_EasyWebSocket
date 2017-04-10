@@ -4,10 +4,10 @@
     <head>
       <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
       <meta name='viewport' content='width=device-width, initial-scale=0.9, maximum-scale=0.9, user-scalable=no'>
-      <title>EasyWebSocket Beta 1.47</title>
+      <title>SD_EasyWebSocket Beta 1.50</title>
       <script type='text/javascript'>
 
-        var wsUri = 'ws://192.168.0.22';
+        var wsUri = 'ws://192.168.0.14';
         var websocket = null;
         var LastTime1;
         var RateTime = 0;
@@ -24,7 +24,8 @@
         function testWebSocket(){      
           if(websocket == null){
             websocket = new WebSocket(wsUri);
-            websocket.binaryType = 'blob';
+//            websocket.binaryType = 'blob';
+            websocket.binaryType = 'arraybuffer';
             websocket.onopen = function(evt) { onOpen(evt) };
             websocket.onclose = function(evt) { onClose(evt) };
             websocket.onmessage = function(evt) { onMessage(evt) };
@@ -33,14 +34,14 @@
         };
 
         function onOpen(evt){
-          writeToStatus('WS.CONNECTED');
+          writeToStatus('WebSocket.CONNECTED');
         };
 
         function onClose(evt){
           if(websocket.readyState == 2){
-            writeToStatus('WS.Closing');
+            writeToStatus('WebSocket.Closing');
           }else if(websocket.readyState == 3){
-            writeToStatus('WS.Disconnected');
+            writeToStatus('WebSocket.Disconnected');
           }
           websocket = null;
         };
@@ -88,6 +89,23 @@
           }
         };
         
+        function DoSend2(data, id){
+          if(data<0) data = 0;
+          if(data>999) data = 999;
+          var str_data = String(data);
+          var str_data_len = str_data.length;
+          switch(str_data_len){
+            case 1:
+              str_data = '00' + str_data;
+              break;
+            case 2:
+              str_data = '0' + str_data;
+              break;    
+          }
+          var str = str_data + '|' + id + ';';
+          WS_send(str);
+        };
+        
         function doSend_canvas(dataCAV1, dataCAV2){
           if(!((dataCAV1_tmp == dataCAV1) && (dataCAV2_tmp == dataCAV2))){
             var str = String(dataCAV1) + '|' + String(dataCAV2) + ';';
@@ -121,7 +139,7 @@
         };
 
         function WS_close(){
-          websocket.close();
+          websocket.close(4500,'Client Closed');
         };
 
         function writeToStatus(message){
@@ -162,7 +180,30 @@
         };
 
         window.onload = function(){ setTimeout('init()', 1000); };
+        
+        function dummy_z(){};
+        
+        function get_pic(){
+          var SelFileVal = document.Fsel.File_sel.value;
+          var SelFileTarget = document.getElementById('FileTxt');
+          var f_path = 'http://192.168.0.14/picture/' + String(SelFileVal);
+          var f_rx_m = document.getElementById('file_RX_msg');
+          SelFileTarget.innerHTML = f_path;
+          f_rx_m.innerHTML = 'Now Loading';
+          DoSend2(100,'Image');
+          WS_close();
+          setTimeout('dummy_z()',50);
+          var pic = document.getElementById('pic_place');
+          pic.src = f_path;
+          pic.width = 300;
+          pic.onload;
+          var images = document.getElementsByTagName('img');
+          for (var i = 0; i < images.length; i++) {
+              images[i].onload = function() {
+                  f_rx_m.innerHTML = 'Load Complete!';
+              }
+          };
+        };
 
       </script>
     </head>
-    

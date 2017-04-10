@@ -1,4 +1,4 @@
-# ESP8266_SD_EasyWebSocket BETA 1.49
+# ESP8266_SD_EasyWebSocket BETA 1.50
 Simple library for WebSocket communication with ESP-WROOM-02(ESP8266) and smartphone browser.  
 This requires the Arduino core for ESP8266 WiFi chip library.   
 https://github.com/esp8266/arduino  
@@ -6,13 +6,16 @@ This use SD card (SPI).
 
 My Blog: https://www.mgo-tec.com
 # Change log:
-(1.49)   
+(1.50)  
+Greatly improved handshake function composition.  
 Added a function to GET Web articles by https (SSL).  
 Along with that, include WiFiClientSecure.h.  
 Memory reduced sample sketch.  
 Other minor fixes.  
-  
+　　
 -NEW Class-  
+EWS_HandShake_main  
+Get_Http_Req_Status  
 EWS_https_Web_Get  
 (Attention !: Consumes a lot of memory.)  
   
@@ -40,13 +43,16 @@ Fixed ESP8266DataReceive_SD_write class.
 Bug fix etc...  
   
 # 【更新履歴】(Japanese)
-(1.49)  
+(1.50)  
+ハンドシェイク関数関連の構成を大幅改良。  
 Web記事を https ( SSL )でGETする関数を追加。  
 それに伴い、WiFiClientSecure.h をインクルード。  
 サンプルスケッチの使用メモリを削減した。  
-その他、軽微な修正。  
+その他、軽微な修正。
   
--NEW Class-  
+-以下の関数を追加-  
+EWS_HandShake_main  
+Get_Http_Req_Status  
 EWS_https_Web_Get  
 (この関数はメモリを多く消費するので注意)  
   
