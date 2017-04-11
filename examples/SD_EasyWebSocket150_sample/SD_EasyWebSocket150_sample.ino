@@ -17,8 +17,8 @@ const uint8_t mosi =13; //Master Output Slave Input ESP8266=Master SD = slave
 const uint8_t miso =12; //Master Input Slave Output
 const uint8_t cs_SD = 15; //SDcard CS(ChipSelect)
 
-const char* ssid = "xxxx"; //ご自分のルーターのSSIDに書き換えてください
-const char* password = "xxxx"; //ご自分のルーターのパスワードに書き換えてください
+const char* ssid = "dejja--seik245zzz";
+const char* password = "kei33-zzzzzz11aiugerr748af73666663afdutsffssdsds1cs";
 
 const char* HTM_head_file = "EWS/EwsHead2.txt"; //HTML header file
 
@@ -174,11 +174,11 @@ Serial.println(data_i);
 }
 //************************* Websocket handshake **************************************
 void websocket_handshake(){
-  String html_str1="", html_str2="", html_str3="", html_str4="", html_str5="", html_str6="", html_str7="";
-
   get_http_req_status = ews.Get_Http_Req_Status(); //ブラウザからGETリクエストがあったかどうかの判定
   
   if(get_http_req_status == true){
+    String html_str1="", html_str2="", html_str3="", html_str4="", html_str5="", html_str6="", html_str7="";
+
     //※String変数一つにEWS_Canvas_Slider_T関数は２つまでしか入らない
     html_str1 += "<body style='background:#000; color:#fff;'>\r\n";
     html_str1 += "<font size=3>\r\n";
