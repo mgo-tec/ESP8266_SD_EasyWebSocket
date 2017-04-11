@@ -298,11 +298,11 @@ void SD_EasyWebSocket::EWS_HandShake_main(uint8_t sel, uint8_t cs_SD, const char
     HTML_head_F1 = SD_EasyWebSocket::SD_open(head_file1);
     if(HTML_head_F1 == 0) return;
 
-    if(sel == 2){
+    if(sel >= 2){
       HTML_head_F2 = SD_EasyWebSocket::SD_open(head_file2);
       if(HTML_head_F2 == 0) return;
     }
-    if(sel > 0){
+    if(sel >= 1){
       HTML_1 = SD_EasyWebSocket::SD_open(html_file1);
       if(HTML_1 == 0) return;
       HTML_2 = SD_EasyWebSocket::SD_open(html_file2);
@@ -311,29 +311,29 @@ void SD_EasyWebSocket::EWS_HandShake_main(uint8_t sel, uint8_t cs_SD, const char
 
     __client.write(HTML_head_F1, 1460);
 
-    if(sel == 2){
+    if(sel >= 2){
       __client.print(res_LIP);
       __client.write(HTML_head_F2, 1460);
     }
-    if(sel > 0){
+    if(sel >= 1){
       __client.write(HTML_1, 1460);
     }
 
     __client.print(res_html1);
     __client.print(res_html2);
     __client.print(res_html3);
-    if(sel == 0){
+    if(sel == 0 || sel == 3){
       __client.print(res_html4);
       __client.print(res_html5);
       __client.print(res_html6);
       __client.print(res_html7);
     }
-    if(sel > 0){
+    if(sel >= 1){
       __client.write(HTML_2, 1460);
       HTML_1.close();
       HTML_2.close();
     }
-    if(sel == 2){
+    if(sel >= 2){
       HTML_head_F2.close();
     }
 

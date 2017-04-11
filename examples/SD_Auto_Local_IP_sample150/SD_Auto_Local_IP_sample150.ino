@@ -3,10 +3,9 @@ SD_WebSocket for ESP-WROOM-02 ( ESP8266 ) Sample Sketch
 for Beta version 1.50
 ---> https://www.mgo-tec.com
 Please rewrite their own the ssid and password.
-Please rewrite their own local IP address of "/data/spiffs_01.txt" in the sketch folder.
-Use the SD card (SPI), please upload the ews_head.txt file to SD/EWS/ folder.
+Use the SD card (SPI), please upload the LIPhead1.txt and LIPhead2.txt and dummy.txt file to SD/EWS/ folder.
 */
-#include <SD_EasyWebSocket.h>
+#include <SD_EasyWebSocket.h> //Beta ver 1.50
 #include <SD.h>
 
 const uint8_t sclk = 14; //SDcard SCLK
@@ -14,8 +13,8 @@ const uint8_t mosi =13; //Master Output Slave Input ESP8266=Master SD = slave
 const uint8_t miso =12; //Master Input Slave Output
 const uint8_t cs_SD = 15; //SDcard CS(ChipSelect)
 
-const char* ssid = "xxxx";
-const char* password = "xxxx";
+const char* ssid = "xxxx"; //ご自分のルーターのSSIDに書き換えてください
+const char* password = "xxxx"; //ご自分のルーターのパスワードに書き換えてください
 
 const char* HTM_head_file1 = "EWS/LIPhead1.txt"; //HTMLヘッダファイル1
 const char* HTM_head_file2 = "EWS/LIPhead2.txt"; //HTMLヘッダファイル2
@@ -32,16 +31,20 @@ IPAddress LIP; //ローカルIPアドレス自動取得用
 
 String ret_str;
 String txt = "text send?";
-bool get_http_req_status = false;
+bool get_http_req_status = false; //ブラウザからGETリクエストがあったかどうかの判定変数
 
-int PingSendTime = 30000;
+int PingSendTime = 10000;
 
-#define ledPin1 16 //GPIO #16
+#define ledPin1 16 //GPIO #16 ※16番ピンはSPI通信のGPIOダイレクトアクセスは使えないので注意
 #define ledPin2 5 //GPIO #5
 #define ledPin3 4 //GPIO #4
 
-void setup() 
-{
+void setup() {
+  delay(1000);
+  pinMode(16, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(4, OUTPUT);  
+  
   ews.AP_Connect(ssid, password);
   delay(1000);
   
@@ -174,17 +177,17 @@ Serial.println(data_i);
 }
 //************************* Websocket handshake **************************************
 void websocket_handshake(){
-  String html_str1, html_str2, html_str3, html_str4, html_str5, html_str6, html_str7;
+  String html_str1="", html_str2="", html_str3="", html_str4="", html_str5="", html_str6="", html_str7="";
 
-  get_http_req_status = ews.Get_Http_Req_Status();
+  get_http_req_status = ews.Get_Http_Req_Status(); //ブラウザからGETリクエストがあったかどうかの判定
   
   if(get_http_req_status == true){
-    //ver1.50では、HMTLは基本的にSDカード内のファイルに記述した方が良い
-    html_str1 = "<body style='background:#000; color:#fff;'>\r\n";
+    //※String変数一つにEWS_Canvas_Slider_T関数は２つまでしか入らない
+    html_str1 += "<body style='background:#000; color:#fff;'>\r\n";
     html_str1 += "<font size=3>\r\n";
     html_str1 += "ESP-WROOM-02(ESP8266)\r\n";
     html_str1 += "<br>\r\n";
-    html_str1 += "SD_EasyWebSocket Beta1.45 Sample\r\n";
+    html_str1 += "SD_EasyWebSocket Beta1.50 Sample\r\n";
     html_str1 += "</font><br>\r\n";
     html_str1 += ews.EWS_BrowserSendRate();
     html_str1 += "<br>\r\n";
@@ -206,15 +209,18 @@ void websocket_handshake(){
     
     html_str3 += "<br>LED RED..... Dim\r\n";
     html_str3 += ews.EWS_Canvas_Slider_T("RED",200,40,"#777777","#ff0000"); //CanvasスライダーはString文字列に２つまでしか入らない
-    html_str3 += "<br><br>\r\n";
-    html_str3 += ews.EWS_WebSocket_Reconnection_Button2("WS-Reconnect", "grey", 200, 40, "black" , 17);
-    html_str3 += "<br><br>\r\n";  
-    html_str3 += ews.EWS_Close_Button2("WS CLOSE", "#bbb", 150, 40, "red", 17);
-    html_str3 += ews.EWS_Window_ReLoad_Button2("ReLoad", "#bbb", 150, 40, "blue", 17);
-    html_str3 += "</body></html>\r\n";
+    html_str3 += "<br>LED RGB..... Dim\r\n";
+    html_str3 += ews.EWS_Canvas_Slider_T("_RGB",200,40,"#777777","#ffff00");
+        
+    html_str4 += "<br><br>\r\n";
+    html_str4 += ews.EWS_WebSocket_Reconnection_Button2("WS-Reconnect", "grey", 200, 40, "black" , 17);
+    html_str4 += "<br><br>\r\n";  
+    html_str4 += ews.EWS_Close_Button2("WS CLOSE", "#bbb", 150, 40, "red", 17);
+    html_str4 += ews.EWS_Window_ReLoad_Button2("ReLoad", "#bbb", 150, 40, "blue", 17);
+    html_str4 += "</body></html>\r\n";
 
     //WebSocket ハンドシェイク関数
-    ews.EWS_HandShake_main(2, cs_SD, HTM_head_file1, HTM_head_file2, HTML_body_file, dummy_file, LIP, html_str1, html_str2, html_str3, html_str4, html_str5, html_str6, html_str7);
+    ews.EWS_HandShake_main(3, cs_SD, HTM_head_file1, HTM_head_file2, HTML_body_file, dummy_file, LIP, html_str1, html_str2, html_str3, html_str4, html_str5, html_str6, html_str7);
   }
 }
 

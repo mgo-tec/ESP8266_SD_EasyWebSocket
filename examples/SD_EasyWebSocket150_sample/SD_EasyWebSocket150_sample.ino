@@ -5,8 +5,11 @@ for Beta version 1.50
 Please rewrite their own the ssid and password.
 Please rewrite their own local IP address of "EWS/EwsHead2.txt" in the sketch folder.
 Use the SD card (SPI), please upload the ews_head.txt file to SD/EWS/ folder.
+
+EwsHead2.txtファイルをテキストエディタで開き、IPアドレスをご自分の環境に合わせて変えてください。
+保存する時は必ず UTF-8 形式にすること
 */
-#include <SD_EasyWebSocket.h>
+#include <SD_EasyWebSocket.h>  //Beta ver 1.50
 #include <SD.h>
 
 const uint8_t sclk = 14; //SDcard SCLK
@@ -14,8 +17,8 @@ const uint8_t mosi =13; //Master Output Slave Input ESP8266=Master SD = slave
 const uint8_t miso =12; //Master Input Slave Output
 const uint8_t cs_SD = 15; //SDcard CS(ChipSelect)
 
-const char* ssid = "xxxx";
-const char* password = "xxxx";
+const char* ssid = "xxxx"; //ご自分のルーターのSSIDに書き換えてください
+const char* password = "xxxx"; //ご自分のルーターのパスワードに書き換えてください
 
 const char* HTM_head_file = "EWS/EwsHead2.txt"; //HTML header file
 
@@ -27,25 +30,22 @@ SD_EasyWebSocket ews;
 
 String ret_str;
 String txt = "text send?";
-bool get_http_req_status = false;
+bool get_http_req_status = false; //ブラウザからGETリクエストがあったかどうかの判定変数
 
 int PingSendTime = 10000;
 
-#define ledPin1 16 //GPIO #16
+#define ledPin1 16 //GPIO #16 ※16番ピンはSPI通信のGPIOダイレクトアクセスは使えないので注意
 #define ledPin2 5 //GPIO #5
 #define ledPin3 4 //GPIO #4
 
 void setup() {
-  pinMode(sclk, OUTPUT);
-  pinMode(mosi, OUTPUT);
-  pinMode(miso, INPUT); //ここはINPUTなので注意
-  pinMode(cs_SD, OUTPUT);
-
+  delay(1000);
   pinMode(16, OUTPUT);
   pinMode(5, OUTPUT);
-  pinMode(4, OUTPUT);
+  pinMode(4, OUTPUT);  
   
   ews.AP_Connect(ssid, password);
+  delay(1000);
 
   Serial.println(); Serial.println("Initializing SD card...");
   if (!SD.begin(cs_SD,40000000)) {
@@ -174,17 +174,17 @@ Serial.println(data_i);
 }
 //************************* Websocket handshake **************************************
 void websocket_handshake(){
-  String html_str1, html_str2, html_str3, html_str4, html_str5, html_str6, html_str7;
+  String html_str1="", html_str2="", html_str3="", html_str4="", html_str5="", html_str6="", html_str7="";
 
-  get_http_req_status = ews.Get_Http_Req_Status();
+  get_http_req_status = ews.Get_Http_Req_Status(); //ブラウザからGETリクエストがあったかどうかの判定
   
   if(get_http_req_status == true){
-    //The assignment in the Body element of the browser of HTML to a String variable
-    html_str1 = "<body style='background:#000; color:#fff;'>\r\n";
+    //※String変数一つにEWS_Canvas_Slider_T関数は２つまでしか入らない
+    html_str1 += "<body style='background:#000; color:#fff;'>\r\n";
     html_str1 += "<font size=3>\r\n";
     html_str1 += "ESP-WROOM-02(ESP8266)\r\n";
     html_str1 += "<br>\r\n";
-    html_str1 += "SD_EasyWebSocket Beta1.49 Sample\r\n";
+    html_str1 += "SD_EasyWebSocket Beta1.50 Sample\r\n";
     html_str1 += "</font><br>\r\n";
     html_str1 += ews.EWS_BrowserSendRate();
     html_str1 += "<br>\r\n";
@@ -195,22 +195,22 @@ void websocket_handshake(){
     html_str1 += ews.EWS_TextBox_Send("txt1", "Hello Easy WebSocket Beta1.3","送信");
     html_str1 += "<br><br>\r\n";
   
-    html_str2 = "LED \r\n";
+    html_str2 += "LED \r\n";
     html_str2 += ews.EWS_On_Momentary_Button("ALL", "全点灯", 65,25,15,"#000000","#AAAAAA");
     html_str2 += ews.EWS_On_Momentary_Button("OUT", "全消灯", 65,25,15,"#FFFFFF","#555555");
     html_str2 += "<br>\r\n";
     
-    html_str3 = "<br>LED BLUE... Dim\r\n";
+    html_str3 += "<br>LED BLUE... Dim\r\n";
     html_str3 += ews.EWS_Canvas_Slider_T("BLUE",200,40,"#777777","#0000ff");
     html_str3 += "<br>LED GREEN Dim\r\n";
     html_str3 += ews.EWS_Canvas_Slider_T("GREEN",200,40,"#777777","#00ff00");
     
-    html_str4 = "<br>LED RED..... Dim\r\n";
+    html_str4 += "<br>LED RED..... Dim\r\n";
     html_str4 += ews.EWS_Canvas_Slider_T("RED",200,40,"#777777","#ff0000");
     html_str4 += "<br>LED RGB..... Dim\r\n";
     html_str4 += ews.EWS_Canvas_Slider_T("_RGB",200,40,"#777777","#ffff00");
     
-    html_str5 = "<br><br>\r\n";
+    html_str5 += "<br><br>\r\n";
     html_str5 += "BLUE... \r\n";
     html_str5 += ews.EWS_OnOff_Button("blue",60,25,15,"#FFFFFF","#0000FF");
     html_str5 += ews.EWS_Touch_Slider_T("blue", "Txt1");
@@ -222,7 +222,7 @@ void websocket_handshake(){
     html_str5 += ews.EWS_Sl_Text("Txt2",15,"#00ff00");
     html_str5 += "<br><br\r\n>";
     
-    html_str6 = "RED..... \r\n";
+    html_str6 += "RED..... \r\n";
     html_str6 += ews.EWS_OnOff_Button("red",60,25,15,"#FFFFFF","#ff0000");
     html_str6 += ews.EWS_Touch_Slider_T("red", "Txt3");
     html_str6 += ews.EWS_Sl_Text("Txt3",15,"#ff0000");

@@ -10,7 +10,7 @@ My Blog: https://www.mgo-tec.com
 Greatly improved handshake function composition.  
 Added a function to GET Web articles by https (SSL).  
 Along with that, include WiFiClientSecure.h.  
-Memory reduced sample sketch.  
+Significant improvement of sample sketch.  
 Other minor fixes.  
 　　
 -NEW Class-  
@@ -47,8 +47,8 @@ Bug fix etc...
 ハンドシェイク関数関連の構成を大幅改良。  
 Web記事を https ( SSL )でGETする関数を追加。  
 それに伴い、WiFiClientSecure.h をインクルード。  
-サンプルスケッチの使用メモリを削減した。  
-その他、軽微な修正。
+サンプルスケッチの大幅改良。  
+その他、軽微な修正。  
   
 -以下の関数を追加-  
 EWS_HandShake_main  
