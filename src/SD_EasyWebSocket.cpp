@@ -169,6 +169,8 @@ bool SD_EasyWebSocket::Get_Http_Req_Status(){
   
   if(!_WS_on){
     handleClient();
+  }else{
+    return false;
   }
 
   if(__client){
