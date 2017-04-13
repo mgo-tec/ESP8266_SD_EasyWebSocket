@@ -31,7 +31,6 @@ IPAddress LIP; //ローカルIPアドレス自動取得用
 
 String ret_str;
 String txt = "text send?";
-bool get_http_req_status = false; //ブラウザからGETリクエストがあったかどうかの判定変数
 
 int PingSendTime = 10000;
 
@@ -177,9 +176,8 @@ Serial.println(data_i);
 }
 //************************* Websocket handshake **************************************
 void websocket_handshake(){
-  get_http_req_status = ews.Get_Http_Req_Status(); //ブラウザからGETリクエストがあったかどうかの判定
-  
-  if(get_http_req_status == true){
+
+  if(ews.Get_Http_Req_Status()){ //ブラウザからGETリクエストがあったかどうかの判定
     String html_str1="", html_str2="", html_str3="", html_str4="", html_str5="", html_str6="", html_str7="";
 
     //※String変数一つにEWS_Canvas_Slider_T関数は２つまでしか入らない
@@ -195,7 +193,7 @@ void websocket_handshake(){
     html_str1 += "<br>\r\n";
     html_str1 += ews.EWS_Status_Text2("WebSocket Status","#555", 20,"#FF00FF");
     html_str1 += "<br><br>\r\n";
-    html_str1 += ews.EWS_TextBox_Send("txt1", "Hello Easy WebSocket Beta1.3","送信");
+    html_str1 += ews.EWS_TextBox_Send("txt1", "Hello Easy WebSocket Beta1.50","送信");
     html_str1 += "<br><br>\r\n";
     html_str1 += "LED \r\n";
     html_str1 += ews.EWS_On_Momentary_Button("ALL", "全点灯", 65,25,15,"#000000","#AAAAAA");
@@ -222,5 +220,6 @@ void websocket_handshake(){
     //WebSocket ハンドシェイク関数
     ews.EWS_HandShake_main(3, cs_SD, HTM_head_file1, HTM_head_file2, HTML_body_file, dummy_file, LIP, html_str1, html_str2, html_str3, html_str4, html_str5, html_str6, html_str7);
   }
+
 }
 
