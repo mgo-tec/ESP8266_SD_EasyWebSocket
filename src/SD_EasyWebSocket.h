@@ -1,6 +1,6 @@
 /*
   SD_EasyWebSocket.h - WebSocket for ESP-WROOM-02 ( esp8266 )
-  Beta version 1.50
+  Beta version 1.51
 
 For use micro SD ( SDHC )card.
 
@@ -90,6 +90,7 @@ public:
 	String EWS_WebSocket_Reconnection_Button(String name, String BG_col, uint16_t width, uint16_t height, String font_col, uint8_t font_size);
   String EWS_WebSocket_Reconnection_Button2(String name, String BG_col, uint16_t width, uint16_t height, String font_col, uint8_t font_size);
 	String EWS_BrowserSendRate();
+  String EWS_ESP8266_SendRate(String button_id);
   String EWS_Status_Text(String name, uint8_t font_size, String color);
 	String EWS_Status_Text2(String name, String b_color, uint8_t font_size, String f_color);
   String EWS_Canvas_Slider_T(String slider_id, uint16_t width, uint16_t height, String frame_col, String fill_col);
