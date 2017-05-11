@@ -1,6 +1,6 @@
 /*
   SD_EasyWebSocket.h - WebSocket for ESP-WROOM-02 ( esp8266 )
-  Beta version 1.51
+  Beta version 1.51.2
 
 For use micro SD ( SDHC )card.
 
@@ -95,7 +95,7 @@ public:
 	String EWS_Status_Text2(String name, String b_color, uint8_t font_size, String f_color);
   String EWS_Canvas_Slider_T(String slider_id, uint16_t width, uint16_t height, String frame_col, String fill_col);
   String EWS_TextBox_Send(String id, String txt, String BT_txt);
-  String EWS_Web_Get(const char* host, String target_ip, uint8_t char_tag, String Final_tag, String Begin_tag, String End_tag, String Paragraph);
+  String EWS_Web_Get(const char* host, String target_ip, char char_tag, String Final_tag, String Begin_tag, String End_tag, String Paragraph);
   String EWS_https_Web_Get(const char* host, String target_ip, char char_tag, String Final_tag, String Begin_tag, String End_tag, String Paragraph);
   bool HTTP_SD_Pic_Send(const char* Serv, const char* dir);
   void Favicon_Response(String str, uint8_t ws, uint8_t ini_htm, uint8_t up_f);
